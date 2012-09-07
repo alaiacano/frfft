@@ -1,5 +1,21 @@
 Pardon the LaTeX, this is old documentation (and old code). You may be better off just skipping to the references section.
 
+This was a direct port from a c++ implementation (which I've since lost), which is why it's not very 'pythonic'. I'll update it soon, I promise.
+
+## Usage
+
+    import frfft
+    import numpy as np
+    t=np.linspace(-4*np.pi,4*np.pi, 1000)
+    x=np.sin(2*np.pi*40*t) + np.sin(2*np.pi*20*t) + np.sin(2*np.pi*10*t)
+    X=frfft.FrFFT(x,1./1024)
+
+    subplot(211)
+    plot(np.abs(X.result))
+    subplot(212)
+    plot(np.unwrap(arctan2(X.result.imag,X.result.real)))
+    show()
+
 ## The Math
 
 The FrFFT equation is \f$ G_k(\textbf{\textbf{x}},\alpha) =

@@ -5,6 +5,27 @@ Created on Oct 12, 2009
 '''
 import numpy
 
+def nextpow2(num):
+    '''
+    Returns the next highest power of 2 from the given value.
+
+
+    Example
+    -------
+
+    >>>nextpow2(1000)
+    1024
+
+    >>nextpow2(1024)
+    2048
+    '''
+    npow = 2
+    while npow <= num: 
+        npow = npow * 2
+    return npow
+
+
+
 class FrFFT(object):
     '''
     Computes the fractional fast Fourier transform of a given input.  
@@ -13,7 +34,7 @@ class FrFFT(object):
     
     USAGE:
     
-    frfft
+    import frfft
     from numpy import linspace, pi, sin
     t=linspace(-4*pi,4*pi, 1000)
     x=sin(2*pi*40*t) + sin(2*pi*20*t) + sin(2*pi*10*t)
@@ -43,7 +64,7 @@ class FrFFT(object):
         self.alpha = float(alpha * 1.)
         
         ## pp >= 2*m+1
-        self.p_p = self.nextpow2(self.m_in + 1)
+        self.p_p = nextpow2(self.m_in + 1)
         
         ## Complex valued input data
         self.data = numpy.array(x_in, dtype = 'complex')
@@ -74,7 +95,7 @@ class FrFFT(object):
         self.result = numpy.exp(exponent) * y_z[:self.m_in]
         
         
-    def generate_y(self):
+    def __generate_y(self):
         '''
         Intermediary function to calculate y described above.
         '''
@@ -87,7 +108,7 @@ class FrFFT(object):
         y_out[:self.m_in] = self.data * numpy.exp(exponent)
         return y_out
     
-    def generate_z(self):
+    def __generate_z(self):
         
         '''
         Intermediary function to calculate z described above.
@@ -103,22 +124,3 @@ class FrFFT(object):
 
         return z_out
         
-def nextpow2(num):
-    '''
-    Returns the next highest power of 2 from the given value.
-
-
-    Example
-    -------
-
-    >>>nextpow2(1000)
-    1024
-
-    >>nextpow2(1024)
-    2048
-    '''
-    npow = 2
-    while npow <= num: 
-        npow = npow * 2
-    return npow
-
